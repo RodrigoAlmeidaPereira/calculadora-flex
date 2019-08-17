@@ -25,7 +25,7 @@ class SignUpActivity : AppCompatActivity() {
             mAuth.createUserWithEmailAndPassword(inputEmail.text.toString(), inputName.text.toString())
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-
+                        this.saveRealTimeDatabase()
                     } else {
                         Toast.makeText(this@SignUpActivity, it.exception?.message, Toast.LENGTH_SHORT).show()
                     }
@@ -42,7 +42,7 @@ class SignUpActivity : AppCompatActivity() {
                 if (it.isSuccessful) {
                     Toast.makeText(this, "Usuário criado com sucesso", Toast.LENGTH_SHORT).show()
                     val returningIntent = Intent()
-                    returningIntent.putExtra("email", user.email)
+                    returningIntent.putExtra("email", inputEmail.text.toString())
                     setResult(Activity.RESULT_OK, returningIntent)
                     finish()
                 } else {
