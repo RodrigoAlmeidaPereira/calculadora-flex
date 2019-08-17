@@ -22,6 +22,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         mAuth = FirebaseAuth.getInstance()
+        mAuth.currentUser?.reload()
 
         if (mAuth.currentUser != null) {
             this.goToHome()
