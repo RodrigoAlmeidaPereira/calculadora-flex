@@ -42,6 +42,7 @@ class FormActivity : AppCompatActivity() {
         etEthanolAverage.addTextChangedListener(DecimalTextWatcher(etEthanolAverage))
 
         btCalculate.setOnClickListener {
+            saveCarData()
             val nextScreen = Intent(this@FormActivity, ResultActivity::class.java)
             nextScreen.putExtra(GAS_PRICE_KEY, etGasPrice.text.toString().toDouble())
             nextScreen.putExtra(ETHANOL_PRICE_KEY, etEthanolPrice.text.toString().toDouble())
@@ -68,7 +69,7 @@ class FormActivity : AppCompatActivity() {
     private fun listenerFirebaseRealtime() {
         val database = FirebaseDatabase.getInstance()
 
-        database.setPersistenceEnabled(true)
+//        database.setPersistenceEnabled(true)
         database.getReference(firebaseReferenceNode)
             .child(userId)
             .addValueEventListener(object : ValueEventListener {
