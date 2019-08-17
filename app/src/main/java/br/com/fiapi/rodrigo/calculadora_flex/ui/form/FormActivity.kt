@@ -6,11 +6,11 @@ import android.os.Bundle
 import br.com.fiapi.rodrigo.calculadora_flex.R
 import br.com.fiapi.rodrigo.calculadora_flex.model.CarData
 import br.com.fiapi.rodrigo.calculadora_flex.ui.result.ResultActivity
+import br.com.fiapi.rodrigo.calculadora_flex.utils.DatabaseUtil
 import br.com.fiapi.rodrigo.calculadora_flex.watchers.DecimalTextWatcher
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_form.*
 
@@ -60,17 +60,16 @@ class FormActivity : AppCompatActivity() {
             etEthanolAverage.text.toString().toDouble()
         )
 
-        FirebaseDatabase.getInstance()
+        DatabaseUtil.getDatabase()
             .getReference(firebaseReferenceNode)
             .child(userId)
             .setValue(carData)
     }
 
     private fun listenerFirebaseRealtime() {
-        val database = FirebaseDatabase.getInstance()
-
-//        database.setPersistenceEnabled(true)
-        database.getReference(firebaseReferenceNode)
+        DatabaseUtil
+            .getDatabase()
+            .getReference(firebaseReferenceNode)
             .child(userId)
             .addValueEventListener(object : ValueEventListener {
 
