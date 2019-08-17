@@ -3,8 +3,11 @@ package br.com.fiapi.rodrigo.calculadora_flex.ui.form
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import br.com.fiapi.rodrigo.calculadora_flex.R
 import br.com.fiapi.rodrigo.calculadora_flex.model.CarData
+import br.com.fiapi.rodrigo.calculadora_flex.ui.login.LoginActivity
 import br.com.fiapi.rodrigo.calculadora_flex.ui.result.ResultActivity
 import br.com.fiapi.rodrigo.calculadora_flex.utils.DatabaseUtil
 import br.com.fiapi.rodrigo.calculadora_flex.watchers.DecimalTextWatcher
@@ -26,6 +29,7 @@ class FormActivity : AppCompatActivity() {
     private lateinit var userId : String
     private lateinit var mAuth: FirebaseAuth
     private val firebaseReferenceNode = "CarData"
+    private val defaultClearValueText = "0.0"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,5 +88,40 @@ class FormActivity : AppCompatActivity() {
                 override fun onCancelled(p0: DatabaseError) {
                 }
             })
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.form_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            R.id.action_clear -> {
+                clearData()
+                return true
+            }
+            R.id.action_logout -> {
+                logout()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun logout() {
+        mAuth.signOut()
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
+    }
+
+    private fun clearData() {
+        etGasPrice.setText(defaultClearValueText)
+        etEthanolPrice.setText(defaultClearValueText)
+        etGasAverage.setText(defaultClearValueText)
+        etEthanolAverage.setText(defaultClearValueText)
+        saveCarData()
     }
 }
