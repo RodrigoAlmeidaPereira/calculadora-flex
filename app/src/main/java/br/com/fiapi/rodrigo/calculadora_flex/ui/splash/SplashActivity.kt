@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.animation.AnimationUtils
 import br.com.fiapi.rodrigo.calculadora_flex.R
-import br.com.fiapi.rodrigo.calculadora_flex.ui.form.FormActivity
 import br.com.fiapi.rodrigo.calculadora_flex.ui.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 
@@ -54,9 +53,7 @@ class SplashActivity : AppCompatActivity() {
         ivLogo.startAnimation(animation)
 
         Handler().postDelayed({
-            val nextScreen = Intent(this@SplashActivity, FormActivity::class.java)
-            startActivity(nextScreen)
-            finish()
+            showLogin()
         }, DELAY_TIME)
     }
 
